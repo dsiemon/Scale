@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="des.game.scale"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="10" />
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="4"/>
+	 <!--Actually, this game works fine on small screens, but the only one out 
+	right now has no 3D acceleration, so it's slow and unplayable. --> 
+	<supports-screens android:largeScreens="true"
+	                  android:smallScreens="false" 
+					  android:anyDensity="true"
+					  android:normalScreens="false"/>
+    </application>
+</manifest>
