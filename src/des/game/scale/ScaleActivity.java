@@ -451,7 +451,7 @@ public abstract class ScaleActivity extends Activity implements SensorEventListe
         if (id == QUIT_GAME_DIALOG) {
         	
             dialog = new AlertDialog.Builder(this)
-                .setTitle("")
+                .setTitle(R.string.quit_game_dialog_title)
                 .setPositiveButton(R.string.quit_game_dialog_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                     	finish();
