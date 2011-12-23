@@ -133,7 +133,7 @@ public class TextureLibrary extends BaseObject {
 
     /** Loads a bitmap into OpenGL and sets up the common parameters for 2D texture maps. */
     protected Texture loadBitmap(Context context, GL10 gl, Texture texture) {
-        assert gl != null;
+        assert gl != null;  
         assert context != null;
         assert texture != null;
         if (texture.loaded == false && texture.resource != -1) {
@@ -141,7 +141,7 @@ public class TextureLibrary extends BaseObject {
             
             int error = gl.glGetError();
             if (error != GL10.GL_NO_ERROR) {
-                DebugLog.d("Texture Load 1", "GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
+                DebugLog.d("Texture Load", "1GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
             }
             
             assert error == GL10.GL_NO_ERROR;
@@ -152,7 +152,7 @@ public class TextureLibrary extends BaseObject {
             
             error = gl.glGetError();
             if (error != GL10.GL_NO_ERROR) {
-                DebugLog.d("Texture Load 2", "GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
+                DebugLog.d("Texture Load", "2GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
             }
             
             assert error == GL10.GL_NO_ERROR;
@@ -177,12 +177,13 @@ public class TextureLibrary extends BaseObject {
                     // Ignore.
                 }
             }
-            
+
             GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
             
             error = gl.glGetError();
             if (error != GL10.GL_NO_ERROR) {
-                DebugLog.d("Texture Load 3", "GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
+            	DebugLog.d("Texture Load", "3: ");
+                DebugLog.d("Texture Load", "3GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
             }
             
             assert error == GL10.GL_NO_ERROR;
@@ -203,7 +204,7 @@ public class TextureLibrary extends BaseObject {
             
             error = gl.glGetError();
             if (error != GL10.GL_NO_ERROR) {
-                DebugLog.d("Texture Load 4", "GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
+                DebugLog.d("Texture Load", "4GLError: " + error + " (" + GLU.gluErrorString(error) + "): " + texture.resource);
             }
             
             assert error == GL10.GL_NO_ERROR;
