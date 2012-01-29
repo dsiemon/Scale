@@ -16,17 +16,18 @@
 package des.game.physics;
 
 
-import des.game.base.BaseObject;
 import des.game.base.GLPoint;
+import des.game.base.GameComponent;
 import des.game.boundary.Boundary;
+import des.game.base.FieldComponent;
 
-public class Field extends BaseObject{
-
+public class Field extends GameComponent{
+	public Boundary area;
 	protected Field(){
 		super();
 	}
 
-	public Field(FieldBehavior fieldBehavior){
+	public Field(FieldComponent fieldBehavior){
 		super();
 		this.fieldBehavior = fieldBehavior;
 	}
@@ -43,7 +44,7 @@ public class Field extends BaseObject{
  * @return
  */
 	public Boundary getArea(){
-		return fieldBehavior.getArea();
+		return area;
 	}
 	/**
 	 * Super classes will determine how the field effects the area. the physics object may or may 
@@ -51,8 +52,8 @@ public class Field extends BaseObject{
 	 * @param vector if the location is in the field then it will be effected.
 	 * @return returns true when vector is in the area
 	 */
-	public boolean collision(PhysicsObject object){
-		return fieldBehavior.handleObject(object);
+	public boolean handleCollision(PhysicsObject object, int time){
+		return fieldBehavior.handleObject(object, time);
 	}
 
 	/**
@@ -65,11 +66,11 @@ public class Field extends BaseObject{
 	 * sets rate at which field strength decreases
 	 * @param f
 	 */
-	public void setFieldStrength(FieldBehavior f){
+	public void setFieldStrength(FieldComponent f){
 		fieldBehavior = f;
 	}
 
-	public FieldBehavior getFieldStrength(){
+	public FieldComponent getFieldStrength(){
 		return fieldBehavior;
 	}
 
@@ -77,12 +78,13 @@ public class Field extends BaseObject{
 	public void remove(){
 		FieldSet.instance.remove(this);
 	}
-	protected FieldBehavior fieldBehavior;
+	public FieldComponent fieldBehavior;
 	
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		fieldBehavior = null;
+		area = null;
 		
 	}
 	

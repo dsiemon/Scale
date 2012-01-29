@@ -1,0 +1,43 @@
+package des.game.base;
+
+import des.game.boundary.Boundary;
+import des.game.physics.PhysicsObject;
+
+public class FieldComponent extends GameComponent {
+	protected GLPoint location;
+	
+	
+	
+	@Override
+	public void reset(){
+		super.reset();
+	}
+	
+	@Override
+    public void update(float timeDelta, BaseObject parent) {
+	
+	}
+	
+	public boolean handleObject(PhysicsObject object, int time){
+		
+		return false;
+	}
+	
+	/**
+	 * sets the location of the field
+	 * @return
+	 */
+	public GLPoint getLocation() {
+		return location;
+	}
+/**
+ * sets the location of the field
+ * @param location
+ */
+	public void setLocation(GLPoint location) {
+		if(location != null){
+			this.location = location;
+		}
+	}
+
+}

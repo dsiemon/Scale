@@ -16,8 +16,9 @@
 package des.game.boundary;
 
 import des.game.base.GLPoint;
+import des.game.base.GameComponent;
 
-public class Polygon  {
+public class Polygon  extends GameComponent {
 	public static final int MAX_VERT = 5;
 	
 	private Circle circle;

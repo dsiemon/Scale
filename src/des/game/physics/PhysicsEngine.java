@@ -329,8 +329,9 @@ public class PhysicsEngine extends BaseObject{
 						boolean coPlanar = po.getBoundary().isCoplanar(f.getArea());
 	
 						if(coPlanar && po.getBoundary().getYProjection().overlap(f.getArea().getYProjection())){
-							
-							f.collision(po);
+							if(po.getBoundary().collision(f.area)){
+								f.handleCollision(po,time);
+							}
 						}
 					}
 				}
@@ -346,7 +347,9 @@ public class PhysicsEngine extends BaseObject{
 						boolean coPlanar = f.getArea().isCoplanar(po.getLocation().getZ());
 				
 						if(coPlanar && f.getArea().getYProjection().overlap(po.getVector().getLocation().getY())){
-							f.collision(po);
+							if(f.area.collision(po.getVector().getLocation())){
+								f.handleCollision(po,time);
+							}
 						}
 					}
 				}

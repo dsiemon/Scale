@@ -46,7 +46,7 @@ public class FieldSet extends ObjectManager<Field>{
 		final Object[] fieldArray = this.mObjects.getArray();
 		for(int i = 0; i < count; i++){
 			final Field field = (Field)fieldArray[i];
-			field.getArea().setBox();
+			field.area.setBox();
 		}
 	}
 	

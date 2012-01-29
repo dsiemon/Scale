@@ -28,7 +28,9 @@ import des.game.base.GameObjectAttributes;
 import des.game.base.TObjectPool;
 import des.game.boundary.Boundary;
 import des.game.boundary.Circle;
+import des.game.boundary.Polygon;
 import des.game.boundary.Rectangle;
+import des.game.physics.Field;
 import des.game.physics.PhysicsObject;
 import des.game.physics.VectorObject;
 
@@ -151,16 +153,40 @@ public abstract class ScaleObjectFactory extends BaseObject{
     			physicsObject.boundary.getCircle().reset();
     			getComponentPool(Circle.class).release(physicsObject.boundary.getCircle());
     		}
-    		else if(physicsObject.boundary.getRectangle() != null){
+    		if(physicsObject.boundary.getRectangle() != null){
     			physicsObject.boundary.getRectangle().reset();
     			getComponentPool(Rectangle.class).release(physicsObject.boundary.getRectangle());
     		}
-    		
+    		if(physicsObject.boundary.getPolygon() != null){
+    			physicsObject.boundary.getPolygon().reset();
+    			getComponentPool(Polygon.class).release(physicsObject.boundary.getPolygon());
+    		}
     		
     		physicsObject.boundary.reset();
     		getComponentPool(Boundary.class).release(physicsObject.boundary);
     	}
     	
+    	// the field
+    	if(physicsObject.field != null){
+    		if(physicsObject.field.area.getCircle() != null){
+    			physicsObject.field.area.getCircle().reset();
+    			getComponentPool(Circle.class).release(physicsObject.field.area.getCircle());
+    		}
+    		if(physicsObject.field.area.getRectangle() != null){
+    			physicsObject.field.area.getRectangle().reset();
+    			getComponentPool(Rectangle.class).release(physicsObject.field.area.getRectangle());
+    		}
+    		if(physicsObject.field.area.getPolygon() != null){
+    			physicsObject.field.area.getPolygon().reset();
+    			getComponentPool(Polygon.class).release(physicsObject.field.area.getPolygon());
+    		}
+    		
+    		physicsObject.field.area.reset();
+    		getComponentPool(Boundary.class).release(physicsObject.field.area);
+    		
+    		physicsObject.field.reset();
+    		getComponentPool(Field.class).release(physicsObject.field);
+    	}
     	
     	// the physics object
     	physicsObject.reset();
