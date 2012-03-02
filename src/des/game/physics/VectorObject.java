@@ -22,12 +22,13 @@ import des.game.base.GameComponent;
 public class VectorObject extends GameComponent{
 	
 	protected GLPoint location;
-	protected double mass;
+	public double mass;
 	protected Velocity velocity;
 	protected boolean locked;
 	protected boolean pendingRemove;
 	public VectorObject(){
 		super();
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_VECTOR.ordinal());
 		locked = true;
 		pendingRemove = false;
 		mass = 1;
@@ -60,7 +61,12 @@ public class VectorObject extends GameComponent{
 		pendingRemove = false;
 			
 	}
-	
+    public void initializeFromTemplate(GameComponent other, float x,float y,float orientation,float velocity,float lifetime){
+    	VectorObject comp = (VectorObject)other;
+    	
+    	this.mass = comp.mass;
+    	this.setVelocityMagDir(velocity, orientation);
+    }
 	public void initialize(double m,GLPoint p, double xV,double yV){
 		if(m <= 0) m = 1;
 		if(m > PhysicsEngine.MAX_MASS) m = PhysicsEngine.MAX_MASS;
@@ -89,6 +95,16 @@ public class VectorObject extends GameComponent{
 	public GLPoint getLocation() {
 		return location;
 	}
+	public void setLocation(GLPoint location) {
+		pendingRemove = false;
+		
+		this.location = location;
+		velocity.location = location;
+
+		
+		velocity.acceleration.location = location;
+		velocity.outsideAcceleration.location = location;
+	}
 	public void setLocation(double x,double y){
 		location.setX(x);
 		location.setY(y);
@@ -98,7 +114,7 @@ public class VectorObject extends GameComponent{
 		location.setY(y);
 		location.setZ(z);
 	}
-	public Velocity getVelocity() {
+	private Velocity getVelocity() {
 		return velocity;
 	}	
 	public void moveVector(double time){
@@ -177,6 +193,10 @@ public class VectorObject extends GameComponent{
 	public void addOutsideAcceleration(Acceleration a){
 		velocity.addOutsideAcceleration(a);
 	}
+	public void addOutsideAcceleration(double x, double y){
+		velocity.addOutsideAcceleration(x,y);
+	}
+
 	public void clearOutsideAcceleration(){
 		velocity.clearOutsideAcceleration();
 	}

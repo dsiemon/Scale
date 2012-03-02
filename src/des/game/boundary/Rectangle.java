@@ -22,12 +22,12 @@ import des.game.base.GameComponent;
 
 public class Rectangle extends GameComponent{
 	private GLPoint center;
-	private double height;
-	private double width;
+	public double height;
+	public double width;
 	private ProjectionLine[] edges;
 	private Pair[] points;
 	public Rectangle(){
-
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_BOUNDARY_PART.ordinal());
 		height = 1;
 		width = 1;
 		this.allocateMemory();
@@ -187,6 +187,9 @@ public class Rectangle extends GameComponent{
 	}
 	public double getBottom(){
 		return center.getY() - height;
+	}
+	public void setCenter(GLPoint c){
+		this.center = c;
 	}
 	private void allocateMemory(){
 		edges = new ProjectionLine[4];

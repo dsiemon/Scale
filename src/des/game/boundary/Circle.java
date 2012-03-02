@@ -25,6 +25,7 @@ public class Circle extends GameComponent{
 	 */
 	public Circle(){
 		super();
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_BOUNDARY_PART.ordinal());
 		radius = 1;
 	}
 	/**
@@ -120,6 +121,9 @@ public class Circle extends GameComponent{
 		return radius;
 	}
 	public void setRadius(double radius) {
+		this.radius = radius;
+	}	
+	public void setRadius(float radius) {
 		this.radius = radius;
 	}	
 	public double getNormal(Circle other){
@@ -241,6 +245,6 @@ public class Circle extends GameComponent{
 		return angle;
 	}
 	private GLPoint center;
-	private double radius;
+	public double radius;
 	
 }

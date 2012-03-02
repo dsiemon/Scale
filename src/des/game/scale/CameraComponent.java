@@ -22,6 +22,7 @@ import des.game.base.FixedSizeArray;
 import des.game.base.GameObject;
 import des.game.base.Vector2;
 import des.game.physics.PhysicsObject;
+import des.game.physics.VectorObject;
 import des.game.physics.Velocity;
 import des.game.scale.InputTouchEvent.TouchState;
 
@@ -191,10 +192,10 @@ public class CameraComponent extends CollisionComponent {
         
         
     	if(this.physicsObject.getVector() != null){
-	    	final Velocity v = this.physicsObject.getVector().getVelocity();
+	    	final VectorObject v = this.physicsObject.getVector();
 	    	final Vector2 velocity = gameObject.velocity;
-	    	velocity.x = (float)v.getXComponent();
-	    	velocity.y = (float)v.getYComponent();
+	    	velocity.x = (float)v.getVelocityXComponent();
+	    	velocity.y = (float)v.getVelocityYComponent();
 	    	
 	    	gameObject.targetVelocity.x = velocity.x;
 	    	gameObject.targetVelocity.y = velocity.y;

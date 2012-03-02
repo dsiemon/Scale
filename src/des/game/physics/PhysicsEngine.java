@@ -499,15 +499,15 @@ public class PhysicsEngine extends BaseObject{
 			VectorObject bv = b.getVector();
 			//calculate impulse
 			double impulse = (2 * av.getMass() * bv.getMass()/(av.getMass() + bv.getMass()));
-			double normal = a.getBoundary().getNormal(b.getBoundary());
+			final double normal = a.getBoundary().getNormal(b.getBoundary());
 			//differences in velocity
-			double tempX = (av.getVelocityXComponent() - bv.getVelocityXComponent()) * Math.cos(normal);
-			double tempY = (av.getVelocityYComponent() - bv.getVelocityYComponent()) * Math.sin(normal);
+			final double tempX = (av.getVelocityXComponent() - bv.getVelocityXComponent()) * Math.cos(normal);
+			final double tempY = (av.getVelocityYComponent() - bv.getVelocityYComponent()) * Math.sin(normal);
 			//account for mass
 			impulse = impulse * (tempX + tempY);
 			
-			double impulseX = impulse * Math.cos(normal);
-			double impulseY = impulse * Math.sin(normal);
+			final double impulseX = impulse * Math.cos(normal);
+			final double impulseY = impulse * Math.sin(normal);
 			//set new velocities
 			av.setVelocityXComponent(av.getVelocityXComponent()-impulseX/av.getMass() );
 			av.setVelocityYComponent(av.getVelocityYComponent() - impulseY/av.getMass());
@@ -526,14 +526,14 @@ public class PhysicsEngine extends BaseObject{
 			}
 			//get the vector and the normal of collision
 			VectorObject av = a.getVector();
-			double normal = a.getBoundary().getNormal(b.getBoundary());
+			final double normal = a.getBoundary().getNormal(b.getBoundary());
 			//calculate new direction
 			double dir = av.getVelocityDirection()+Math.PI;
 			
 			while(dir >= Math.PI*2) dir -= Math.PI*2;
 		
 			
-			double delta = normal-dir;
+			final double delta = normal-dir;
 			dir += 2*delta;// + Math.PI;
 			//set the new direction, the magnitude will not change
 			av.setVelocityMagDir(av.getVelocityMagnitude(),dir);

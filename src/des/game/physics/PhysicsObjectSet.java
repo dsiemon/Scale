@@ -16,6 +16,7 @@
 package des.game.physics;
 
 
+import des.game.base.BaseObject;
 import des.game.base.ObjectManager;
 
 
@@ -30,6 +31,9 @@ public class PhysicsObjectSet extends ObjectManager<PhysicsObject>{
 			instance = new PhysicsObjectSet(size);
 		}
 	}
-
+	@Override
+    public void update(float timeDelta, BaseObject parent) {
+        commitUpdates();
+    }
 	public static PhysicsObjectSet instance;
 }

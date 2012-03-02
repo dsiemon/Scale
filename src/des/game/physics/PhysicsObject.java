@@ -35,14 +35,15 @@ public class PhysicsObject extends GameComponent{
 	public Boundary boundary;
 	public GLPoint location;
 	public CollisionBehavior collisionBehavior;
-	
+	public boolean active;
 
 	public boolean hasVector;
 
 	
 	public PhysicsObject(){
 		super();
-
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_OBJECT.ordinal());
+		active = true;
 		type = MOB;
 		location = new GLPoint();
 		
@@ -63,12 +64,36 @@ public class PhysicsObject extends GameComponent{
 		location = p;
 		type = MOB;
 	}
+	
+    public void initializeFromTemplate(GameComponent other, float x,float y,float orientation,float velocity,float lifetime){
+    	PhysicsObject comp = (PhysicsObject)other;
+    	this.location.setX(x);
+    	this.location.setY(y);
+    	this.location.setZ(0);
+    	this.type = comp.type;
+    }
+    
+    public void propagateLocation(){
+    	if(vector != null){
+    		this.vector.setLocation(this.location);
+    	}
+    	if(boundary != null){
+    		this.boundary.propagateLocation(this.location);
+    	}
+    	if(field != null){
+    		field.area.propagateLocation(this.location);
+    		
+    	}
+    }
 	/**
 	 * Gets a reference to the VectorObject of this object.
 	 * @return A reference to the VectorObject
 	 */
 	public VectorObject getVector() {
 		return vector;
+	}
+	public void setVector(VectorObject vector) {
+		this.vector = vector;
 	}
 	/**
 	 * Gets a reference to the Field of this object.
@@ -84,7 +109,11 @@ public class PhysicsObject extends GameComponent{
 	public Boundary getBoundary() {
 		return boundary;
 	}
+	public void setBoundary(Boundary boundary) {
+		this.boundary = boundary;
+	}
 	public void add(){
+		active = true;
 		PhysicsObjectSet.instance.add(this);
 		if(boundary != null) BoundarySet.instance.add(this);
 		if(vector != null) vector.add();
@@ -141,6 +170,7 @@ public class PhysicsObject extends GameComponent{
 		}
 	}
 	public void remove(){
+		active = false;
 		PhysicsObjectSet.instance.remove(this);
 		if(boundary != null) BoundarySet.instance.remove(this);
 		if(vector != null) vector.remove();
@@ -151,6 +181,9 @@ public class PhysicsObject extends GameComponent{
 	}
 	@Override
 	public void reset() {
+		if(active){
+			this.remove();
+		}
 		type = MOB;
 		vector = null;
 		field = null;

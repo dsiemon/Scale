@@ -43,7 +43,7 @@ public class Polygon  extends GameComponent {
 		center = new GLPoint();
 		Pair[] temp = {new Pair(0,0),new Pair(0,1),new Pair(1,0)};
 		points = temp;
-		
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_BOUNDARY_PART.ordinal());
 		setCircleAndBounds();
 
 	}

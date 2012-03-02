@@ -6,7 +6,9 @@ import des.game.physics.PhysicsObject;
 public class FieldComponent extends GameComponent {
 	protected GLPoint location;
 	
-	
+	public FieldComponent(){
+		super.setPhase(GameComponent.ComponentPhases.POST_PHYSICS.ordinal());
+	}
 	
 	@Override
 	public void reset(){

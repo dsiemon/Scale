@@ -30,6 +30,7 @@ import des.game.boundary.Boundary;
 import des.game.boundary.Circle;
 import des.game.boundary.Polygon;
 import des.game.boundary.Rectangle;
+import des.game.physics.ControlledVectorObject;
 import des.game.physics.Field;
 import des.game.physics.PhysicsObject;
 import des.game.physics.VectorObject;
@@ -144,7 +145,13 @@ public abstract class ScaleObjectFactory extends BaseObject{
     	// the vector
     	if(physicsObject.vector != null){
 	    	physicsObject.vector.reset();
-	    	getComponentPool(VectorObject.class).release(physicsObject.vector);
+	    	if(physicsObject.vector.getClass().equals(ControlledVectorObject.class)){
+	    		getComponentPool(ControlledVectorObject.class).release(physicsObject.vector);
+	    	}
+	    	else{
+	    		getComponentPool(VectorObject.class).release(physicsObject.vector);
+	    	}
+	    	
     	}
     	// the boundary
     	if(physicsObject.boundary != null){
@@ -206,9 +213,9 @@ public abstract class ScaleObjectFactory extends BaseObject{
         object.removeAll();
         object.commitUpdates();
         
-        if(object.physcisObject != null){
-        	this.releasePhysicsObject(object.physcisObject);
-        }
+        //if(object.physcisObject != null){
+        //	this.releasePhysicsObject(object.physcisObject);
+        //}
         if(object.attributes != null){
         	object.attributes.reset();
     		getComponentPool(GameObjectAttributes.class).release(object.attributes);

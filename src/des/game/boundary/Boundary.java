@@ -40,6 +40,7 @@ public class Boundary extends GameComponent{
 	
 	public Boundary(){
 		super();
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_BOUNDARY.ordinal());
 		xProjection = new BoundingBox();
 		yProjection = new BoundingBox();
 		zProjection = new BoundingBox();
@@ -318,5 +319,17 @@ public class Boundary extends GameComponent{
 		circle = null;
 		rectangle = null;
 		polygon = null;
+	}
+	public void propagateLocation(GLPoint location) {
+		if(circle != null){
+			circle.setCenter(location);
+		}
+		else if(rectangle != null){
+			rectangle.setCenter(location);
+		}
+		else if(polygon != null){
+			//TODO
+		}
+		
 	}
 }

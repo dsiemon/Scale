@@ -147,6 +147,10 @@ public class Velocity extends Vector{
 		outsideAcceleration.yComponent += a.yComponent;
 		outsideAcceleration.zComponent += a.zComponent;
 	}
+	public void addOutsideAcceleration(double x, double y){
+		outsideAcceleration.xComponent += x;
+		outsideAcceleration.yComponent += y;
+	}
 	/**
 	 * clears accelerations that have been added to the external acceleration.
 	 */

@@ -16,6 +16,7 @@
 package des.game.physics;
 
 
+import des.game.base.BaseObject;
 import des.game.base.ObjectManager;
 
 
@@ -23,7 +24,10 @@ public class FieldSet extends ObjectManager<Field>{
 	private FieldSet(int size){
 		super(size);
 	}
-	
+	@Override
+    public void update(float timeDelta, BaseObject parent) {
+        commitUpdates();
+    }
 	/**
 	 * performs an insertion sort on the set. after the physics engine moves the vectors the order of the 
 	 * 	boundaries is assumed to change minimally, so the set should be already be near sorted when this is

@@ -26,13 +26,16 @@ public abstract class GameComponent extends PhasedObject {
     // Defines high-level buckets within which components may choose to run.
     public enum ComponentPhases {
     	
-        THINK,                  // decisions are made
+    	PHYSICS_OBJECT,
+    	PHYSICS_VECTOR,
+    	PHYSICS_BOUNDARY,
+    	PHYSICS_BOUNDARY_PART,
+    	PHYSICS_FIELD,
         PHYSICS,                // impulse velocities are summed
         POST_PHYSICS,           // inertia, friction, and bounce
-        MOVEMENT,               // position is updated
-        COLLISION_DETECTION,    // intersections are detected
-        COLLISION_RESPONSE,     // intersections are resolved
-        POST_COLLISION,         // position is now final for the frame
+    	THINK,                  // decisions are made
+    	THINK_TWO,
+    	THINK_THREE,
         ANIMATION,              // animations are selected
         PRE_DRAW,               // drawing state is initialized
         DRAW,                   // drawing commands are scheduled.
@@ -44,6 +47,20 @@ public abstract class GameComponent extends PhasedObject {
     public GameComponent() {
         super();
         shared = false;
+    }
+    
+    /**
+     * This is used for loading game components with reflection, subclasses can override this function to copy initialization data from a definition copy loaded from xml
+     * @param other
+     * @param x
+     * @param y
+     * @param orientation
+     * @param velocity
+     * @param lifetime
+     */
+    public void initializeFromTemplate(GameComponent other, float x,float y,float orientation,float velocity,float lifetime){
+    	
+    
     }
     
 }

@@ -23,8 +23,9 @@ import des.game.base.FieldComponent;
 
 public class Field extends GameComponent{
 	public Boundary area;
-	protected Field(){
+	public Field(){
 		super();
+		super.setPhase(GameComponent.ComponentPhases.PHYSICS_FIELD.ordinal());
 	}
 
 	public Field(FieldComponent fieldBehavior){

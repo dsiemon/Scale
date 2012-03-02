@@ -19,6 +19,7 @@ import android.util.Log;
 
 import des.game.physics.CollisionBehavior;
 import des.game.physics.PhysicsObject;
+import des.game.physics.VectorObject;
 import des.game.physics.Velocity;
 
 public class CollisionComponent extends GameComponent implements CollisionBehavior{
@@ -27,11 +28,11 @@ public class CollisionComponent extends GameComponent implements CollisionBehavi
 	public PhysicsObject physicsObject;
 	public CollisionComponent(){
 		super();
-		super.setPhase(GameComponent.ComponentPhases.PHYSICS.ordinal());
+		super.setPhase(GameComponent.ComponentPhases.POST_PHYSICS.ordinal());
 	}
 	public CollisionComponent(PhysicsObject physicsObject){
 		super();
-		super.setPhase(GameComponent.ComponentPhases.PHYSICS.ordinal());
+		super.setPhase(GameComponent.ComponentPhases.POST_PHYSICS.ordinal());
 		
 		this.setPhysicsObject(physicsObject);
 	}
@@ -50,10 +51,10 @@ public class CollisionComponent extends GameComponent implements CollisionBehavi
     	position.y = (float)this.physicsObject.getLocation().getY();
     	
     	if(this.physicsObject.getVector() != null){
-	    	final Velocity v = this.physicsObject.getVector().getVelocity();
+	    	final VectorObject v = this.physicsObject.getVector();
 	    	final Vector2 velocity = gameObject.velocity;
-	    	velocity.x = (float)v.getXComponent();
-	    	velocity.y = (float)v.getYComponent();
+	    	velocity.x = (float)v.getVelocityXComponent();
+	    	velocity.y = (float)v.getVelocityYComponent();
 	    	
 	    	gameObject.targetVelocity.x = velocity.x;
 	    	gameObject.targetVelocity.y = velocity.y;

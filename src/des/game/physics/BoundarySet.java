@@ -17,6 +17,7 @@ package des.game.physics;
 
 import java.util.ArrayList;
 
+import des.game.base.BaseObject;
 import des.game.base.ObjectManager;
 
 
@@ -34,7 +35,10 @@ public class BoundarySet extends ObjectManager<PhysicsObject>{
 		collisionMatrix[PhysicsObject.PROJECTILE] = new boolean[]    {false,false,true ,true ,false,true};
 		collisionMatrix[PhysicsObject.MISC] = new boolean[]    {false,true,true ,true ,true,true};
 	}
-	
+	@Override
+    public void update(float timeDelta, BaseObject parent) {
+        commitUpdates();
+    }
 /**
  * performs an insertion sort on the set. after the physics engine moves the vectors the order of the 
  * 	boundaries is assumed to change minimally, so the set should be already be near sorted when this is

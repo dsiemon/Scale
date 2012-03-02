@@ -16,6 +16,7 @@
 package des.game.physics;
 
 
+import des.game.base.BaseObject;
 import des.game.base.ObjectManager;
 
 /**
@@ -27,6 +28,10 @@ public class VectorObjectSet extends ObjectManager<VectorObject>{
 		super(size);
 	}
 	
+	@Override
+    public void update(float timeDelta, BaseObject parent) {
+        commitUpdates();
+    }
 	
 	protected synchronized static void initializeSet(int size){
 		if(instance == null){
