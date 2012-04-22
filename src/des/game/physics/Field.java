@@ -70,7 +70,9 @@ public class Field extends GameComponent{
 	public void setFieldStrength(FieldComponent f){
 		fieldBehavior = f;
 	}
-
+	public void setArea(Boundary b){
+		area = b;
+	}
 	public FieldComponent getFieldStrength(){
 		return fieldBehavior;
 	}

@@ -4,7 +4,7 @@ import des.game.boundary.Boundary;
 import des.game.physics.PhysicsObject;
 
 public class FieldComponent extends GameComponent {
-	protected GLPoint location;
+	public GLPoint location;
 	
 	public FieldComponent(){
 		super.setPhase(GameComponent.ComponentPhases.POST_PHYSICS.ordinal());

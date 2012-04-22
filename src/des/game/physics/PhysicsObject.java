@@ -83,6 +83,9 @@ public class PhysicsObject extends GameComponent{
     	if(field != null){
     		field.area.propagateLocation(this.location);
     		
+    		if(field.fieldBehavior != null){
+    			field.fieldBehavior.location = this.location;
+    		}
     	}
     }
 	/**
@@ -101,6 +104,9 @@ public class PhysicsObject extends GameComponent{
 	 */
 	public Field getField() {
 		return field;
+	}
+	public void setField(Field field) {
+		this.field = field;
 	}
 	/**
 	 * Gets a reference to the Boundary of this object.
