@@ -38,7 +38,7 @@ public class DrawableBuffer{
 	public static final DrawableBufferComparator drawableBufferComparator = new DrawableBufferComparator();
 	public int startLayer;
 	public int endLayer;
-	
+	public boolean useColor;
 	private Texture texture;
     private FloatBuffer mFloatVertexBuffer;
     private FloatBuffer mFloatTexCoordBuffer;
@@ -53,9 +53,9 @@ public class DrawableBuffer{
     
     private int currentBufferLocation;
     
-	public DrawableBuffer(Texture texture, int startLayer, int endLayer){
+	public DrawableBuffer(Texture texture, int startLayer, int endLayer, boolean color){
 		
-		
+		this.useColor = color;
 		this.startLayer = startLayer;
 		this.endLayer = endLayer;
 		
@@ -71,7 +71,9 @@ public class DrawableBuffer{
 		mUseHardwareBuffers = false;
 		mFloatVertexBuffer = ByteBuffer.allocateDirect(FLOAT_SIZE * BUFFER_SIZE*4 * 3).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	    mFloatTexCoordBuffer = ByteBuffer.allocateDirect(FLOAT_SIZE * BUFFER_SIZE*4 * 2).order(ByteOrder.nativeOrder()).asFloatBuffer();
-	    //mFloatColorBuffer = ByteBuffer.allocateDirect(FLOAT_SIZE * BUFFER_SIZE*4 * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+	    if(useColor){
+	    	mFloatColorBuffer = ByteBuffer.allocateDirect(FLOAT_SIZE * BUFFER_SIZE*4 * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+	    }
 	    mIndexBuffer = ByteBuffer.allocateDirect(CHAR_SIZE * BUFFER_SIZE * 6).order(ByteOrder.nativeOrder()).asCharBuffer();
 	    
 	    
@@ -124,7 +126,9 @@ public class DrawableBuffer{
     
             
             gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mFloatTexCoordBuffer);
-//            gl.glColorPointer(4, GL10.GL_FLOAT, 0, mFloatColorBuffer);
+            if(useColor){
+            	gl.glColorPointer(4, GL10.GL_FLOAT, 0, mFloatColorBuffer);
+            }
             
         } else {
             GL11 gl11 = (GL11)gl;
@@ -141,24 +145,28 @@ public class DrawableBuffer{
             		mFloatTexCoordBuffer, GL11.GL_DYNAMIC_DRAW);
             gl11.glTexCoordPointer(2, GL10.GL_FLOAT, 0, 0);
             
-//            gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, mColorBufferIndex);
-//            final int colorSize = mFloatColorBuffer.capacity() * FLOAT_SIZE; 
-//            gl11.glBufferData(GL11.GL_ARRAY_BUFFER, colorSize, 
-//            		mFloatColorBuffer, GL11.GL_DYNAMIC_DRAW);
-//            gl11.glColorPointer(4, GL10.GL_FLOAT, 0, 0);
-            
+            if(useColor){
+	            gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, mColorBufferIndex);
+	            final int colorSize = mFloatColorBuffer.capacity() * FLOAT_SIZE; 
+	            gl11.glBufferData(GL11.GL_ARRAY_BUFFER, colorSize, 
+	            		mFloatColorBuffer, GL11.GL_DYNAMIC_DRAW);
+	            gl11.glColorPointer(4, GL10.GL_FLOAT, 0, 0);
+            }
             gl11.glBindBuffer(GL11.GL_ELEMENT_ARRAY_BUFFER, mIndexBufferIndex);
         }
 	}
     public void draw(GL10 gl) {
     	OpenGLSystem.bindTexture(GL10.GL_TEXTURE_2D, texture.name);
+    	gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
     	//DebugLog.i("Drawable Buffer", "draw: " + currentBufferLocation);
         if (!mUseHardwareBuffers) {
             gl.glVertexPointer(3, GL10.GL_FLOAT, 0, mFloatVertexBuffer);
     
             
                 gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mFloatTexCoordBuffer);
-            
+                if(useColor){
+                gl.glColorPointer(4, GL10.GL_FLOAT, 0, mFloatColorBuffer);
+                }
     
             gl.glDrawElements(GL10.GL_TRIANGLES, mIndexCount,
                     GL10.GL_UNSIGNED_SHORT, mIndexBuffer);
@@ -181,14 +189,14 @@ public class DrawableBuffer{
 //            		mFloatTexCoordBuffer, GL11.GL_DYNAMIC_DRAW);
             gl11.glTexCoordPointer(2, GL10.GL_FLOAT, 0, 0);
             
-            
-//            gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, mColorBufferIndex);
-//            final int colorSize = mFloatColorBuffer.capacity() * FLOAT_SIZE; 
-//            gl11.glBufferSubData(GL11.GL_ARRAY_BUFFER, 0, colorSize, mFloatColorBuffer);
-////            gl11.glBufferData(GL11.GL_ARRAY_BUFFER, colorSize, 
-////            		mFloatColorBuffer, GL11.GL_DYNAMIC_DRAW);
-//            gl11.glColorPointer(4, GL10.GL_FLOAT, 0, 0);
-            
+            if(useColor){
+	            gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, mColorBufferIndex);
+	            final int colorSize = mFloatColorBuffer.capacity() * FLOAT_SIZE; 
+	            gl11.glBufferSubData(GL11.GL_ARRAY_BUFFER, 0, colorSize, mFloatColorBuffer);
+	//            gl11.glBufferData(GL11.GL_ARRAY_BUFFER, colorSize, 
+	//            		mFloatColorBuffer, GL11.GL_DYNAMIC_DRAW);
+	            gl11.glColorPointer(4, GL10.GL_FLOAT, 0, 0);
+            }
             gl11.glBindBuffer(GL11.GL_ELEMENT_ARRAY_BUFFER, mIndexBufferIndex);
             
             // draw using hardware buffers
@@ -203,6 +211,7 @@ public class DrawableBuffer{
             activeBuffer = null;
 
         }
+        gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
     }
 	public void set(float[][] positions, float[][] uvs) {
         if(currentBufferLocation < BUFFER_SIZE){
@@ -226,17 +235,42 @@ public class DrawableBuffer{
 
 		    mFloatTexCoordBuffer.put(texIndex, u);
 		    mFloatTexCoordBuffer.put(texIndex + 1, v);
-		    
-//		    mFloatColorBuffer.put(colorIndex, r);
-//		    mFloatColorBuffer.put(colorIndex + 1, g);
-//		    mFloatColorBuffer.put(colorIndex + 2, b);
-//		    mFloatColorBuffer.put(colorIndex + 3, a);
-	
-	
-	
+		    if(useColor){
+		    mFloatColorBuffer.put(colorIndex, 1);
+		    mFloatColorBuffer.put(colorIndex + 1, 1);
+		    mFloatColorBuffer.put(colorIndex + 2, 1);
+		    mFloatColorBuffer.put(colorIndex + 3, 1);
+		    }
 	}
-	
-	
+	public void set(float[][] positions, float[][] uvs, float[] color) {
+        if(currentBufferLocation < BUFFER_SIZE){
+        	
+            final int currentVertexLocation = currentBufferLocation * 4;
+        	setVertex(currentVertexLocation, 		positions[0][0], positions[0][1], positions[0][2], uvs[0][0], uvs[0][1], color[0], color[1], color[2], color[3]);
+            setVertex(currentVertexLocation+1, 	positions[1][0], positions[1][1], positions[1][2], uvs[1][0], uvs[1][1], color[0], color[1], color[2], color[3]);
+            setVertex(currentVertexLocation+2, 	positions[2][0], positions[2][1], positions[2][2], uvs[2][0], uvs[2][1], color[0], color[1], color[2], color[3]);
+            setVertex(currentVertexLocation+3, positions[3][0], positions[3][1], positions[3][2], uvs[3][0], uvs[3][1], color[0], color[1], color[2], color[3]);
+            
+            currentBufferLocation++;
+        }
+    }
+	private void setVertex(int vertex, float x, float y, float z, float u, float v, float r, float g, float b, float a) {
+		   final int posIndex = vertex * 3;
+		   final int texIndex = vertex * 2;
+		   final int colorIndex = vertex*4;
+		    mFloatVertexBuffer.put(posIndex, x);
+		    mFloatVertexBuffer.put(posIndex + 1, y);
+		    mFloatVertexBuffer.put(posIndex + 2, z);
+
+		    mFloatTexCoordBuffer.put(texIndex, u);
+		    mFloatTexCoordBuffer.put(texIndex + 1, v);
+		    if(useColor){
+		    mFloatColorBuffer.put(colorIndex, r);
+		    mFloatColorBuffer.put(colorIndex + 1, g);
+		    mFloatColorBuffer.put(colorIndex + 2, b);
+		    mFloatColorBuffer.put(colorIndex + 3, a);
+		    }
+	}
 	
 	
     public boolean usingHardwareBuffers() {
@@ -314,15 +348,16 @@ public class DrawableBuffer{
                         mFloatTexCoordBuffer, GL11.GL_DYNAMIC_DRAW);    
                 
              // Allocate and fill the color buffer.
-//                gl11.glGenBuffers(1, buffer, 0);
-//                mColorBufferIndex = buffer[0];
-//                gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, 
-//                        mTextureCoordBufferIndex);
-//                final int colorSize = 
-//                    mFloatColorBuffer.capacity() * FLOAT_SIZE;
-//                gl11.glBufferData(GL11.GL_ARRAY_BUFFER, colorSize, 
-//                        mFloatColorBuffer, GL11.GL_DYNAMIC_DRAW);    
-                
+                if(useColor){
+	                gl11.glGenBuffers(1, buffer, 0);
+	                mColorBufferIndex = buffer[0];
+	                gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, 
+	                		mColorBufferIndex);
+	                final int colorSize = 
+	                    mFloatColorBuffer.capacity() * FLOAT_SIZE;
+	                gl11.glBufferData(GL11.GL_ARRAY_BUFFER, colorSize, 
+	                        mFloatColorBuffer, GL11.GL_DYNAMIC_DRAW);    
+                }
                 // Unbind the array buffer.
                 gl11.glBindBuffer(GL11.GL_ARRAY_BUFFER, 0);
                 
@@ -342,7 +377,7 @@ public class DrawableBuffer{
                 mUseHardwareBuffers = true;
                 
                 assert mVertBufferIndex != 0;
-                //assert mColorBufferIndex != 0;
+                assert !useColor || mColorBufferIndex != 0;
                 assert mTextureCoordBufferIndex != 0;
                 assert mIndexBufferIndex != 0;
                 assert gl11.glGetError() == 0;

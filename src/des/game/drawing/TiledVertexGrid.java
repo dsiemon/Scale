@@ -30,6 +30,8 @@ public class TiledVertexGrid extends BaseObject {
     private int mWidth;
     private int mHeight;
     private Texture mTexture;
+    protected float[] colors = new float[4];
+    protected boolean useColor = false;
     
     private float mWorldPixelWidth;
     private float mWorldPixelHeight;
@@ -57,7 +59,18 @@ public class TiledVertexGrid extends BaseObject {
         mWorld = world;
         
     }
+    public void setColor(float r, float g, float b, float a){
+    	colors[0] = r;
+    	colors[1] = g;
+    	colors[2] = b;
+    	colors[3] = a;
+    	
+    	this.useColor = true;
+    }
     
+    public void setColorOff(){
+    	this.useColor = false;
+    }
     private Grid generateGrid(int width, int height, int startTileX, int startTileY) {
         final int tileWidth = mTileWidth;
         final int tileHeight = mTileHeight;
@@ -204,8 +217,9 @@ public class TiledVertexGrid extends BaseObject {
                         originX, 
                         originY, 
                         0.0f);
-                
-                
+                if(useColor){
+                	gl.glColor4f(colors[0], colors[1], colors[2], colors[3]);
+                }
                 final int indexesPerTile = 6;
                 final int indexesPerRow = mTilesPerRow * indexesPerTile;
                 final int startOffset = (startX * indexesPerTile);
@@ -214,7 +228,9 @@ public class TiledVertexGrid extends BaseObject {
                 	final int row = tileY * indexesPerRow;
                 	tileMap.drawStrip(gl, true, row + startOffset, count);
                 }
-                
+                if(useColor){
+                	gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                }
                 gl.glPopMatrix();
               
                 Grid.endDrawing(gl);

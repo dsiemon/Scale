@@ -50,7 +50,11 @@ public class GameObject extends PhasedObjectManager {
     public float width;
     public float height;
     
-
+    public boolean useColor;
+    public float r;
+    public float g;
+    public float b;
+    public float a;
     
     /*public enum ActionType {
         INVALID,
@@ -63,6 +67,7 @@ public class GameObject extends PhasedObjectManager {
     }*/
     
     private int mCurrentAction;
+    private int mCurrentState;
     
     public enum Team {
         NONE,
@@ -103,14 +108,15 @@ public class GameObject extends PhasedObjectManager {
         velocity.set(1.0f, 1.0f);
         targetVelocity.set(1.0f, 1.0f);
         mCurrentAction = -1;
-
+        mCurrentState = -1;
         destroyOnDeactivation = false;
         haltOnDeactivation = true;
 
         team = -1;
         width = 0.0f;
         height = 0.0f;
-        
+        useColor = false;
+        r = g = b = a = 1.0f;
         attributes = null;
         
         physcisObject = null;
@@ -160,5 +166,13 @@ public class GameObject extends PhasedObjectManager {
     
     public final void setCurrentAction(int type) {
         mCurrentAction = type;
+    }
+    
+    public final int getCurrentState() {
+        return mCurrentState;
+    }
+    
+    public final void setCurrentState(int type) {
+        mCurrentState = type;
     }
 }

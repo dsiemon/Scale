@@ -88,6 +88,7 @@ public class DrawableBitmap extends DrawableObject {
         
 		//
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		//gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
 		gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 		//Set the face rotation
 		gl.glFrontFace(GL10.GL_CCW);

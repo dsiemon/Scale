@@ -36,7 +36,8 @@ public class DrawableBufferedBitmap extends DrawableObject{
     protected int mViewWidth;
     protected int mViewHeight;
     protected float mOpacity;
-    
+    protected float[] colors = new float[4];
+    protected boolean useColor = false;
     private static final float GL_MAGIC_OFFSET = 0.375f;
     private static float vertices[][] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
     private float textureCoord[][];
@@ -85,6 +86,7 @@ public class DrawableBufferedBitmap extends DrawableObject{
         mViewHeight = 0;
         mOpacity = 1.0f;
         rotatable = false;
+        this.useColor = false;
         
     }
 	public void setTextureCoord(float[][] textureCoord) {
@@ -95,10 +97,18 @@ public class DrawableBufferedBitmap extends DrawableObject{
         mViewWidth = width;
     }
     
-    public void setOpacity(float opacity) {
-        mOpacity = opacity;
+    public void setColor(float r, float g, float b, float a){
+    	colors[0] = r;
+    	colors[1] = g;
+    	colors[2] = b;
+    	colors[3] = a;
+    	
+    	this.useColor = true;
     }
-
+    
+    public void setColorOff(){
+    	this.useColor = false;
+    }
     /**
      * Draw the bitmap at a given x,y position, expressed in pixels, with the
      * lower-left-hand-corner of the view being (0,0).
@@ -198,8 +208,13 @@ public class DrawableBufferedBitmap extends DrawableObject{
 	                vertices[0][2] = vertices[1][2] = vertices[2][2] = vertices[3][2] = getPriority();
             	}
 	               
-	                
-	            db.set(vertices, this.textureCoord);
+               if(useColor){
+            	   db.set(vertices, this.textureCoord, colors);
+               }
+               else{
+            	   db.set(vertices, this.textureCoord);
+               }
+	            
 	        
             }
         }

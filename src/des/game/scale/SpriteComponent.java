@@ -123,15 +123,19 @@ public class SpriteComponent extends GameComponent {
                         // pass it off to the render component for drawing.
                     	
                     	DrawableBufferedBitmap bitmap = factory.allocateDrawableBufferedBitmap();
-                    	 
+                    	final GameObject parentObject = (GameObject)parent;
+                    	
                         bitmap.setWidth(mWidth);
                         bitmap.setHeight(mHeight);
-                        bitmap.setOpacity(mOpacity);
+                        if(parentObject.useColor){
+                        	bitmap.setColor(parentObject.r, parentObject.g, parentObject.b, parentObject.a);
+                        }
+                        //bitmap.setOpacity(mOpacity);
                         bitmap.setTexture(currentFrame.texture);
                     	if(this.rotatable){
 
                             // calculate the rotation
-                            final GameObject parentObject = (GameObject)parent;
+                            
                             final Vector2 orientation = parentObject.targetVelocity;
                              
                             bitmap.setmOrientation(orientation.orientation());
