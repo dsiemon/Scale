@@ -38,7 +38,8 @@ public class FixedSizeArray<T> extends AllocationGuard {
     private boolean mSorted;
     private Sorter<T> mSorter;
     
-    public FixedSizeArray(int size) {
+    @SuppressWarnings("unchecked")
+	public FixedSizeArray(int size) {
         super();
         assert size > 0;
         // Ugh!  No generic array construction in Java.
@@ -49,7 +50,8 @@ public class FixedSizeArray<T> extends AllocationGuard {
         mSorter = new StandardSorter<T>();        
     }
     
-    public FixedSizeArray(int size, Comparator<T> comparator) {
+    @SuppressWarnings("unchecked")
+	public FixedSizeArray(int size, Comparator<T> comparator) {
         super();
         assert size > 0;
         mContents = (T[])new Object[size];
@@ -196,7 +198,7 @@ public class FixedSizeArray<T> extends AllocationGuard {
         int index = -1;
         final int count = mCount;
     	final boolean sorted = mSorted;
-    	final Comparator comparator = mComparator;
+    	final Comparator<T> comparator = mComparator;
     	final T[] contents = mContents;
         if (sorted && !ignoreComparator && count > LINEAR_SEARCH_CUTOFF) {
             if (comparator != null) {

@@ -15,12 +15,8 @@
  ******************************************************************************/
 package des.game.drawing;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11;
 
 import des.game.base.Vector2;
 
@@ -38,10 +34,9 @@ public class DrawableBufferedBitmap extends DrawableObject{
     protected float mOpacity;
     protected float[] colors = new float[4];
     protected boolean useColor = false;
-    private static final float GL_MAGIC_OFFSET = 0.375f;
+    public static final float GL_MAGIC_OFFSET = 0.375f;
     private static float vertices[][] = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
     private float textureCoord[][];
-    private Texture texture;
 
     
 
@@ -51,8 +46,10 @@ public class DrawableBufferedBitmap extends DrawableObject{
         mOrientation = orientation;
 
     }
+    
+    
 	public void setTexture(Texture texture){
-		this.texture = texture;
+		// just get the texture coords since that is all we need
 		textureCoord = texture.textureCoords;
 	}
     public int getWidth() {

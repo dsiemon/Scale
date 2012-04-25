@@ -32,7 +32,8 @@ public abstract class TObjectPool<T> extends ObjectPool {
         super(size);
     }
     
-    public T allocate() {
+    @SuppressWarnings("unchecked")
+	public T allocate() {
         T object = (T)super.allocate();        
         return object;
     }

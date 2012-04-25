@@ -36,9 +36,9 @@ public class DrawableRotatableBitmap extends DrawableBitmap {
     private static boolean mUseHardwareBuffers = false;
     private float mOrientation;
     
-	private static final int FLOAT_SIZE = 4;
-	private static final int FIXED_SIZE = 4;
-	private static final int CHAR_SIZE = 2;
+    public static final int FLOAT_SIZE = 4;
+	public  static final int FIXED_SIZE = 4;
+	public static final int CHAR_SIZE = 2;
     
 
 	/** The buffer holding the vertices */

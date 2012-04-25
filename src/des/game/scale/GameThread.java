@@ -20,7 +20,7 @@ import des.game.base.BaseObject;
 import des.game.base.DebugLog;
 import des.game.base.ObjectManager;
 import android.os.SystemClock;
-import android.view.KeyEvent;
+
 
 
 /** 
@@ -28,6 +28,7 @@ import android.view.KeyEvent;
  * manages synchronization of input events, and handles the draw queue swap with the rendering
  * thread.
  */
+@SuppressWarnings("rawtypes")
 public class GameThread implements Runnable {
     private long mLastTime;
     
@@ -71,7 +72,7 @@ public class GameThread implements Runnable {
     
                     mGameRoot.update(secondsDelta, null);
      
-                    CameraSystem camera = mGameRoot.sSystemRegistry.cameraSystem;
+                    CameraSystem camera = BaseObject.sSystemRegistry.cameraSystem;
                     float x = 0.0f;
                     float y = 0.0f;
                     if (camera != null) {
@@ -92,7 +93,7 @@ public class GameThread implements Runnable {
                         
                         mProfileTime = 0;
                         mProfileFrames = 0;
-                        this.curretFPS = 1000 / (int)averageFrameTime;
+                        GameThread.curretFPS = 1000 / (int)averageFrameTime;
                         
                     }
                 }
@@ -155,7 +156,8 @@ public class GameThread implements Runnable {
         return mPaused;
     }
 
-    public void setGameRoot(ObjectManager gameRoot) {
+
+	public void setGameRoot(ObjectManager gameRoot) {
         mGameRoot = gameRoot;
     }
     

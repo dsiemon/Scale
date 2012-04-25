@@ -31,7 +31,7 @@ public class DrawableBuffer{
 	private static final int CHAR_SIZE = 2;
 	public static DrawableBuffer activeBuffer;
 
-	private static final float GL_MAGIC_OFFSET = 0.375f;
+	public static final float GL_MAGIC_OFFSET = 0.375f;
 	public static final int MAX_BUFFERS = 5;
 	public static final int BUFFER_SIZE = 100;
 	private static final int mIndexCount = BUFFER_SIZE*6;
@@ -60,12 +60,8 @@ public class DrawableBuffer{
 		this.endLayer = endLayer;
 		
 		this.texture = texture;
-		final float texelWidth = 1.0f / texture.width;
-        final float texelHeight = 1.0f / texture.height;
-		final float u = (0 + GL_MAGIC_OFFSET) * texelWidth;
-        final float v = (0 + GL_MAGIC_OFFSET) * texelHeight;
-        final float u2 = ((0 + 32 - GL_MAGIC_OFFSET) * texelWidth);
-        final float v2 = ((0 + 32 - GL_MAGIC_OFFSET) * texelHeight);
+
+
 
 		
 		mUseHardwareBuffers = false;

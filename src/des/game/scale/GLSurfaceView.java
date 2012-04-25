@@ -1626,7 +1626,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
             if (! mGLESDriverCheckComplete) {
                 checkGLESVersion();
                 if (mGLESVersion < kGLES_20) {
-                    String renderer = gl.glGetString(GL10.GL_RENDERER);
+                    gl.glGetString(GL10.GL_RENDERER);
                     mMultipleGLESContextsAllowed = false;
                     notifyAll();
                 }
@@ -1649,7 +1649,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         private int mGLESVersion;
         private boolean mGLESDriverCheckComplete;
         private boolean mMultipleGLESContextsAllowed;
-        private int mGLContextCount;
+        //private int mGLContextCount;
         private static final int kGLES_20 = 0x20000;
         private GLThread mEglOwner;
 

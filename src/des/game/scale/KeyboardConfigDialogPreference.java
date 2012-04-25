@@ -25,7 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnKeyListener;
-import android.content.res.TypedArray;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.DialogPreference;
@@ -34,8 +34,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-
+@SuppressWarnings("unused")
 public class KeyboardConfigDialogPreference extends DialogPreference implements OnKeyListener {
+	
 	private SharedPreferences mSharedPrefs;
 	private Context mContext;
 	private String mLeftPrefKey;

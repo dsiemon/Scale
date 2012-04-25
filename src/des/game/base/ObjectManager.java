@@ -23,6 +23,7 @@ package des.game.base;
  * be specialized to implement special types of traversals (e.g. PhasedObjectManager sorts its
  * children).
  */
+@SuppressWarnings("unchecked")
 public class ObjectManager<T extends BaseObject> extends BaseObject {
     protected static final int DEFAULT_ARRAY_SIZE = 64;
     
@@ -54,7 +55,8 @@ public class ObjectManager<T extends BaseObject> extends BaseObject {
         }
     }
 
-    public void commitUpdates() {
+
+	public void commitUpdates() {
         final int additionCount = mPendingAdditions.getCount();
         if (additionCount > 0) {
             final Object[] additionsArray = mPendingAdditions.getArray();

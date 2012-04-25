@@ -16,11 +16,7 @@
 
 package des.game.scale;
 
-import android.content.res.AssetManager;
-import android.content.res.XmlResourceParser;
 
-import java.io.IOException;
-import java.io.InputStream;
 
 import des.game.base.BaseObject;
 import des.game.base.ObjectManager;

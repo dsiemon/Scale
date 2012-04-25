@@ -46,17 +46,10 @@ public class ObjectRegistry extends BaseObject {
     public CameraSystem cameraSystem;
     public GameObject cameraTarget;
     public ChannelSystem channelSystem;
-//    public CollisionSystem collisionSystem;
     public ContextParameters contextParameters;
-//    public CustomToastSystem customToastSystem;
-    public DebugSystem debugSystem;
     public DrawableFactory drawableFactory;
-//    public EventRecorder eventRecorder;
-//    public GameObjectCollisionSystem gameObjectCollisionSystem;
     public ScaleObjectFactory gameObjectFactory;
     public GameObjectManager gameObjectManager;
-//    public HitPointPool hitPointPool;
-//    public HotSpotSystem hotSpotSystem;
 
 
 	public InputGameInterface inputGameInterface;

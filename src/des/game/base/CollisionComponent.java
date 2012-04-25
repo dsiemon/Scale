@@ -15,12 +15,11 @@
  ******************************************************************************/
 package des.game.base;
 
-import android.util.Log;
 
 import des.game.physics.CollisionBehavior;
 import des.game.physics.PhysicsObject;
 import des.game.physics.VectorObject;
-import des.game.physics.Velocity;
+
 
 public class CollisionComponent extends GameComponent implements CollisionBehavior{
 	

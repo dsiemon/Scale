@@ -1,6 +1,6 @@
 package des.game.base;
 
-import des.game.boundary.Boundary;
+
 import des.game.physics.PhysicsObject;
 
 public class FieldComponent extends GameComponent {

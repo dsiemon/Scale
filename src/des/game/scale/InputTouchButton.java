@@ -1,7 +1,6 @@
 package des.game.scale;
 
 import des.game.base.BaseObject;
-import des.game.base.DebugLog;
 import des.game.base.GLPoint;
 import des.game.base.Vector2;
 import des.game.boundary.Rectangle;
@@ -64,6 +63,12 @@ public class InputTouchButton extends InputTouchEvent{
 	}
 	public float getRelativeY(){
 		return relativeY;
+	}
+	public float getRawRelativeX(){
+		return rawRelativeX;
+	}
+	public float getRawRelativeY(){
+		return rawRelativeY;
 	}
 	private void setRelativeLocation(){
 		float halfWidth = (float)area.width/2;

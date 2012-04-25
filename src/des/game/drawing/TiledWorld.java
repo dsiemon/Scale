@@ -16,11 +16,10 @@
 
 package des.game.drawing;
 
-import java.io.IOException;
-import java.io.InputStream;
+
 
 import des.game.base.AllocationGuard;
-import android.content.res.AssetManager;
+
 
 /**
  * TiledWorld manages a 2D map of tile indexes that define a "world" of tiles.  These may be 

@@ -17,10 +17,6 @@
 package des.game.scale;
 
 
-
-
-import java.util.Comparator;
-
 import des.game.base.AllocationGuard;
 import des.game.base.BaseObject;
 import des.game.base.DebugLog;
@@ -151,9 +147,6 @@ public abstract class Game extends AllocationGuard {
             PhysicsEngine.initialize(100, 100, 100, 100);
             BaseObject.sSystemRegistry.physicsEngine = PhysicsEngine.instance;
             gameRoot.add(PhysicsEngine.instance);
-//            CollisionSystem collision = new CollisionSystem(); TODO add physics engine here
-//            BaseObject.sSystemRegistry.collisionSystem = collision;
-//            BaseObject.sSystemRegistry.hitPointPool = new HitPointPool();
 
             GameObjectManager gameManager = new GameObjectManager(params.viewWidth * 2);
             BaseObject.sSystemRegistry.gameObjectManager = gameManager;
@@ -161,7 +154,6 @@ public abstract class Game extends AllocationGuard {
             ScaleObjectFactory objectFactory = this.createObjectFactory();
             BaseObject.sSystemRegistry.gameObjectFactory = objectFactory;
             
-//            BaseObject.sSystemRegistry.hotSpotSystem = new HotSpotSystem();
             
 
             
@@ -197,97 +189,14 @@ public abstract class Game extends AllocationGuard {
             BaseObject.sSystemRegistry.renderSystem = renderer;
             BaseObject.sSystemRegistry.vectorPool = new VectorPool();
             BaseObject.sSystemRegistry.drawableFactory = new DrawableFactory();
-            
-
-//            HudSystem hud = new HudSystem();
-//            hud.setFuelDrawable(
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_bar), 0, 0),
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_bar_bg), 0, 0));
-//            hud.setFadeTexture(longTermTextureLibrary.allocateTexture(R.drawable.black));
-//            hud.setButtonDrawables(
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_button_fly_disabled), 0, 0), 
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_button_fly_off), 0, 0),
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_button_fly_on), 0, 0),
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_button_stomp_off), 0, 0),
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_button_stomp_on), 0, 0),
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_bar), 0, 0),// BAD CHANGE
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_bar), 0, 0),
-//                    new DrawableBitmap(longTermTextureLibrary.allocateTexture(
-//                            R.drawable.ui_bar), 0, 0));
-//            Texture[] digitTextures = {
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_0),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_1),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_2),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_3),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_4),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_5),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_6),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_7),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_8),
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_9)
-//            };
-//            DrawableBitmap[] digits = {
-//                    new DrawableBitmap(digitTextures[0], 0, 0),
-//                    new DrawableBitmap(digitTextures[1], 0, 0),
-//                    new DrawableBitmap(digitTextures[2], 0, 0),
-//                    new DrawableBitmap(digitTextures[3], 0, 0),
-//                    new DrawableBitmap(digitTextures[4], 0, 0),
-//                    new DrawableBitmap(digitTextures[5], 0, 0),
-//                    new DrawableBitmap(digitTextures[6], 0, 0),
-//                    new DrawableBitmap(digitTextures[7], 0, 0),
-//                    new DrawableBitmap(digitTextures[8], 0, 0),
-//                    new DrawableBitmap(digitTextures[9], 0, 0)
-//            };
-//            DrawableBitmap xDrawable = new DrawableBitmap(
-//                    longTermTextureLibrary.allocateTexture(R.drawable.ui_x), 0, 0);
-//            
-//            hud.setDigitDrawables(digits, xDrawable);
-//            hud.setCollectableDrawables(
-//                    new DrawableBitmap(
-//                            longTermTextureLibrary.allocateTexture(R.drawable.ui_pearl), 0, 0), 
-//                    new DrawableBitmap(
-//                            longTermTextureLibrary.allocateTexture(R.drawable.ui_gem), 0, 0));
-//            
-//            BaseObject.sSystemRegistry.hudSystem = hud;
-//            if (AndouKun.VERSION < 0) {
-//            	hud.setShowFPS(true);
-//            }
-//            gameRoot.add(hud);
+           
     
             BaseObject.sSystemRegistry.vibrationSystem = new VibrationSystem();
-            
-
-            
-            
-            
-            // debug systems
-            //BaseObject.sSystemRegistry.debugSystem = new DebugSystem(longTermTextureLibrary);
-            //dynamicCollision.setDebugPrefs(false, true);
-            
-            
             objectFactory.preloadEffects();
-    
-            
-            
-            
             
             mGameThread = new GameThread(mRenderer);
             mGameThread.setGameRoot(mGameRoot);
-    
-
             currentLevel = null;
-
-            
-            
          
             mBootstrapComplete = true;
         }

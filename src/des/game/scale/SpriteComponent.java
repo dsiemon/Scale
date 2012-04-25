@@ -36,7 +36,6 @@ public class SpriteComponent extends GameComponent {
     private int mCurrentAnimationIndex;
     private int mWidth;
     private int mHeight;
-    private float mOpacity;
     private RenderComponent mRenderComponent;
 
     private boolean mVisible;
@@ -78,7 +77,6 @@ public class SpriteComponent extends GameComponent {
         mRenderComponent = null;
         rotatable = false;
         mCurrentAnimation = null;
-        mOpacity = 1.0f;
         mAnimationsDirty = false;
     }
 
@@ -242,9 +240,6 @@ public class SpriteComponent extends GameComponent {
         mAnimationTime = time;
     }
     
-    public final void setOpacity(float opacity) {
-        mOpacity = opacity;
-    }
     
     public final int getCurrentAnimation() {
         return mCurrentAnimationIndex;

@@ -19,10 +19,11 @@ package des.game.base;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class StandardSorter<T> extends Sorter {
+public class StandardSorter<T> extends Sorter<T> {
 
-    @Override
-    public void sort(Object[] array, int count, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+	@Override
+    public void sort(Object[] array, int count, @SuppressWarnings("rawtypes") Comparator comparator) {
         Arrays.sort(array, 0, count, comparator);
     }
 

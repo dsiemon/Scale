@@ -16,8 +16,6 @@
 package des.game.physics;
 
 
-
-import des.game.base.DebugLog;
 import des.game.base.GLPoint;
 import des.game.base.GameComponent;
 import des.game.boundary.Boundary;

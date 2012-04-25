@@ -114,7 +114,7 @@ public class VectorObject extends GameComponent{
 		location.setY(y);
 		location.setZ(z);
 	}
-	private Velocity getVelocity() {
+	protected Velocity getVelocity() {
 		return velocity;
 	}	
 	public void moveVector(double time){
