@@ -23,12 +23,15 @@ import des.game.scale.InputTouchEvent.TouchState;
 public class InputScreen extends BaseObject{
 	
 	public static final int MAX_TOUCH_POINTS = 5;
+	public static final int MAX_TOUCH_BUTTONS = 5;
 	private InputTouchEvent touchEvents[];
 	
 	private FixedSizeArray<InputTouchEvent> inputQueue;
 	private FixedSizeArray<InputTouchEvent> inputBuffer;
 	private FixedSizeArray<InputTouchEvent> inputPool;
 	
+	private FixedSizeArray<InputTouchButton> touchButtons;
+	private boolean[] proccessedButtonFlags;
 	private boolean[] proccessedFlags;
 	
 	public InputScreen() {
@@ -36,7 +39,10 @@ public class InputScreen extends BaseObject{
 		inputQueue = new FixedSizeArray<InputTouchEvent>(MAX_TOUCH_POINTS);
 		inputBuffer = new FixedSizeArray<InputTouchEvent>(MAX_TOUCH_POINTS);
 		inputPool = new FixedSizeArray<InputTouchEvent>(MAX_TOUCH_POINTS);
+		
+		touchButtons = new FixedSizeArray<InputTouchButton>(MAX_TOUCH_BUTTONS);
 		proccessedFlags = new boolean[MAX_TOUCH_POINTS];
+		proccessedButtonFlags = new boolean[MAX_TOUCH_BUTTONS];
 		
 		for (int x = 0; x < MAX_TOUCH_POINTS; x++) {
 			touchEvents[x] = new InputTouchEvent();
@@ -83,6 +89,22 @@ public class InputScreen extends BaseObject{
 		
 		for(int i = 0; i < MAX_TOUCH_POINTS; i++){
 			proccessedFlags[i] = false;
+		}
+		
+		for(int i = 0; i < MAX_TOUCH_BUTTONS; i++){
+			proccessedButtonFlags[i] = false;
+		}
+		
+		// set buttons that are up to idle
+		final int buttonCount = touchButtons.getCount();
+		final Object[] buttonArray = touchButtons.getArray();
+		
+		for(int i = 0; i < buttonCount; i++){
+			InputTouchButton b = (InputTouchButton)buttonArray[i];
+			if(b.state.equals(TouchState.UP)){
+				b.state = TouchState.IDLE;
+				b.id = -1;
+			}
 		}
 		
 		InputTouchEvent currentEvent = null;
@@ -152,16 +174,29 @@ public class InputScreen extends BaseObject{
 		for(int i = 0; i < InputScreen.MAX_TOUCH_POINTS; i++){
 			// for each event that was not proccessed and that is not idle
 			if(!proccessedFlags[i] && !this.touchEvents[i].state.equals(TouchState.IDLE)){
-				if(this.inputPool.getCount() > 0){
-					InputTouchEvent newEvent = inputPool.removeLast();
-					
-					newEvent.id = this.touchEvents[i].id;
-					newEvent.copyEvent(this.touchEvents[i]);
-					// change the state from whatever teh new event was(up or down) to start
-					newEvent.state = TouchState.START;
-					
-					this.inputBuffer.add(newEvent);
+				
+				// see if this should be captured by a button, buttons can capture touch events that are not already in the input queue. Meaning if a motion starts outside of the button it will not be able to affect it
+				if(!CaptureButtonEvents(this.touchEvents[i].id,this.touchEvents[i].mDownTime,this.touchEvents[i].x, this.touchEvents[i].y, this.touchEvents[i].state)){
+					// if not a button event, create a new touch event
+					if(this.inputPool.getCount() > 0){
+						InputTouchEvent newEvent = inputPool.removeLast();
+						
+						newEvent.id = this.touchEvents[i].id;
+						newEvent.copyEvent(this.touchEvents[i]);
+						// change the state from whatever teh new event was(up or down) to start
+						newEvent.state = TouchState.START;
+						
+						this.inputBuffer.add(newEvent);
+					}
 				}
+			}
+		}
+		
+		// any buttons that did not have an event, set to up
+		for(int i = 0; i < buttonCount; i++){
+			InputTouchButton b = (InputTouchButton)buttonArray[i];
+			if(!proccessedButtonFlags[i] && !b.state.equals(TouchState.IDLE)){
+				b.state = TouchState.UP;
 			}
 		}
 		
@@ -259,4 +294,44 @@ public class InputScreen extends BaseObject{
 		return index;
 	}
 	
+	private boolean CaptureButtonEvents(int id, float currentTime, float x, float y,TouchState state){
+		boolean rtn = false;
+		
+		// first check buttons that are not idle and see if the id matches
+		// set buttons that are up to idle
+		final int buttonCount = touchButtons.getCount();
+		final Object[] buttonArray = touchButtons.getArray();
+		
+		for(int i = 0; i < buttonCount && !rtn; i++){
+			InputTouchButton b = (InputTouchButton)buttonArray[i];
+			// see if there is a button that has capture this input before
+			if(!b.state.equals(TouchState.IDLE) && b.id == id){
+				rtn = true;
+				proccessedButtonFlags[i] = true;
+				if(state.equals(TouchState.UP)){
+					b.release(currentTime, x, y);
+				}
+				else{
+					b.press(currentTime, x, y);
+				}
+			}
+		}
+		
+		// if no id's found look to see if any button can capture the event
+		for(int i = 0; i < buttonCount && !rtn; i++){
+			InputTouchButton b = (InputTouchButton)buttonArray[i];
+			if(b.state.equals(TouchState.IDLE)){
+				rtn = b.CaptureEvent(id, currentTime, x, y);
+				if(rtn){
+					proccessedButtonFlags[i] = true;
+				}
+			}
+		}
+		
+		return rtn;
+	}
+	
+	public void AddButton(InputTouchButton button){
+		this.touchButtons.add(button);
+	}
 }
