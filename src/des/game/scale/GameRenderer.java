@@ -30,7 +30,6 @@ import des.game.base.ObjectManager;
 import des.game.drawing.BufferLibrary;
 import des.game.drawing.DrawableBitmap;
 import des.game.drawing.DrawableBuffer;
-import des.game.drawing.DrawableObject;
 import des.game.drawing.OpenGLSystem;
 import des.game.drawing.TextureLibrary;
 import des.game.scale.RenderSystem.RenderElement;
