@@ -50,13 +50,8 @@ public class GameObject extends PhasedObjectManager {
     public float width;
     public float height;
     
-    public boolean useColor;
-    public float r;
-    public float g;
-    public float b;
-    public float a;
     
-    /*public enum ActionType {
+    public enum ActionType {
         INVALID,
         IDLE,
         MOVE,
@@ -64,7 +59,17 @@ public class GameObject extends PhasedObjectManager {
         HIT_REACT,
         DEATH,
         FROZEN
-    }*/
+    }
+    
+    public enum Direction {
+        INVALID,
+        NONE,
+        LEFT,
+        DOWN,
+        RIGHT,
+        UP,
+        MULTI;
+    }
     
     private int mCurrentAction;
     private int mCurrentState;
@@ -115,8 +120,7 @@ public class GameObject extends PhasedObjectManager {
         team = -1;
         width = 0.0f;
         height = 0.0f;
-        useColor = false;
-        r = g = b = a = 1.0f;
+
         attributes = null;
         
         physcisObject = null;

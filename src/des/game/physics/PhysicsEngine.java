@@ -411,19 +411,19 @@ public class PhysicsEngine extends BaseObject{
 						if(coPlanar && a.getBoundary().collision(b.getBoundary())){
 							
 							//move object back in time until they are no longer colliding
-							/*int temp = */walkBack(a,b,time);
+							int temp = walkBack(a,b,time);
 							//change the velocity vectors accordingly
 							resolveCollision(a,b);
 							
 		
 							//move vector again?
-							/*
+							
 							if(a.getVector()!= null){
 								a.getVector().moveVector(temp);
 							}
 							if(b.getVector()!= null){
 								b.getVector().moveVector(temp);
-							}*/
+							}
 							//if the boundaries are still overlapping move them so that they are not
 							if(a.getBoundary().collision(b.getBoundary())){
 								expunge(a,b);

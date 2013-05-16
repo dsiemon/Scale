@@ -31,7 +31,7 @@ public class BoundarySet extends ObjectManager<PhysicsObject>{
 		collisionMatrix[PhysicsObject.PASSIVE_TYPE] = new boolean[]  {false,false,false,true ,false,false};
 		collisionMatrix[PhysicsObject.INVISIBLE_WALL] = new boolean[]{false,false,false,true ,false,true};
 		collisionMatrix[PhysicsObject.VISIBLE_WALL] = new boolean[]  {false,false,false,true ,true ,true};
-		collisionMatrix[PhysicsObject.MOB] = new boolean[]           {true ,true ,true ,false,true ,true};
+		collisionMatrix[PhysicsObject.MOB] = new boolean[]           {true ,true ,true ,true,true ,true};
 		collisionMatrix[PhysicsObject.PROJECTILE] = new boolean[]    {false,false,true ,true ,false,true};
 		collisionMatrix[PhysicsObject.MISC] = new boolean[]    {false,true,true ,true ,true,true};
 	}

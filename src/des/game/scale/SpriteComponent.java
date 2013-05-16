@@ -125,9 +125,7 @@ public class SpriteComponent extends GameComponent {
                     	
                         bitmap.setWidth(mWidth);
                         bitmap.setHeight(mHeight);
-                        if(parentObject.useColor){
-                        	bitmap.setColor(parentObject.r, parentObject.g, parentObject.b, parentObject.a);
-                        }
+
                         //bitmap.setOpacity(mOpacity);
                         bitmap.setTexture(currentFrame.texture);
                     	if(this.rotatable){

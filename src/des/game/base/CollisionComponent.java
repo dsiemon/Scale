@@ -38,6 +38,7 @@ public class CollisionComponent extends GameComponent implements CollisionBehavi
 	@Override
 	public void reset(){
 		super.reset();
+		this.physicsObject = null;
 	}
 	
 	@Override

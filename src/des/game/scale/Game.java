@@ -28,7 +28,11 @@ import des.game.drawing.DrawableBuffer;
 import des.game.drawing.DrawableFactory;
 import des.game.drawing.OpenGLSystem;
 import des.game.drawing.TextureLibrary;
+import des.game.physics.BoundarySet;
+import des.game.physics.FieldSet;
 import des.game.physics.PhysicsEngine;
+import des.game.physics.PhysicsObjectSet;
+import des.game.physics.VectorObjectSet;
 
 
 
@@ -210,6 +214,11 @@ public abstract class Game extends AllocationGuard {
         manager.destroyAll();
         manager.commitUpdates();
         
+        PhysicsObjectSet.instance.clear();
+		BoundarySet.instance.clear();
+		VectorObjectSet.instance.clear();
+		FieldSet.instance.clear();
+		
         //TODO: it's not strictly necessary to clear the static data here, but if I don't do it
         // then two things happen: first, the static data will refer to junk Texture objects, and
         // second, memory that may not be needed for the next level will hang around.  One solution
