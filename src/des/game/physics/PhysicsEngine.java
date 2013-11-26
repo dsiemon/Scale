@@ -120,14 +120,11 @@ public class PhysicsEngine extends BaseObject{
 	public static int getCollisionMatrixSize(){
 		return BoundarySet.collisionMatrix.length;
 	}
-	/**
-	 * adds a row to the collisionmatrix, adding a new type for the physicsObjects
-	 * @param newRow contains whether or not the new type is allowed to collide with the type at each index
-	 * 			should be either size of the matrix long
-	 * @return the id for the new type
-	 */
-	public static int addRowToCollisionMatrix( ArrayList<Boolean> newRow){
-		return BoundarySet.addRow(newRow);
+	
+	public static void setCollisionMatrix(boolean[][] matrix){
+		BoundarySet.collisionMatrix = matrix;
+		
+		BoundarySet.collisionMatrix[0][0] = false;
 	}
 	/////////Services////////////////////
 

@@ -17,16 +17,16 @@
 package des.game.scale;
 
 import des.game.base.BaseObject;
+import des.game.base.DebugLog;
 import des.game.base.GameComponent;
 import des.game.base.GameObject;
 
 
 
-
-public class GenericAnimationComponent extends GameComponent {
+public class GenericDirectionalAnimationComponent extends GameComponent {
     private SpriteComponent mSprite;
-
-    public GenericAnimationComponent() {
+    
+    public GenericDirectionalAnimationComponent() {
         super();
         setPhase(ComponentPhases.ANIMATION.ordinal());
         reset();
@@ -35,36 +35,35 @@ public class GenericAnimationComponent extends GameComponent {
     @Override
     public void reset() {
         mSprite = null;
-    } 
+    }
     
     @Override
     public void update(float timeDelta, BaseObject parent) {
-
         if (mSprite != null) {
             GameObject parentObject = (GameObject) parent;
-
+            int dir = parentObject.getCurrentDirection();
             switch(parentObject.getCurrentAction()) {
                 
                 case Animation.IDLE:
-                    mSprite.playAnimation(Animation.IDLE);
+                    mSprite.playAnimation(CalculateAnimationIndex(Animation.IDLE, dir));
                     break;
                 case Animation.MOVE:
-                    mSprite.playAnimation(Animation.MOVE);
+                    mSprite.playAnimation(CalculateAnimationIndex(Animation.MOVE, dir));
                     break;
                 case Animation.ATTACK:
-                    mSprite.playAnimation(Animation.ATTACK);
+                    mSprite.playAnimation(CalculateAnimationIndex(Animation.ATTACK, dir));
                     if(mSprite.animationFinished()){
-                    	parentObject.setCurrentAction(Animation.IDLE);
+                    	parentObject.setCurrentAction(CalculateAnimationIndex(Animation.IDLE, dir));
                     }
                     break;
                 case Animation.HIT_REACT:
-                    mSprite.playAnimation(Animation.HIT_REACT);
+                    mSprite.playAnimation(CalculateAnimationIndex(Animation.HIT_REACT, dir));
                     break;
                 case Animation.DEATH:
-                    mSprite.playAnimation(Animation.DEATH);
+                    mSprite.playAnimation(CalculateAnimationIndex(Animation.DEATH, dir));
                     break;
                 case Animation.FROZEN:
-                    mSprite.playAnimation(Animation.FROZEN);
+                    mSprite.playAnimation(CalculateAnimationIndex(Animation.FROZEN, dir));
                     break;
                 case Animation.INVALID:
                 default:  
@@ -78,6 +77,32 @@ public class GenericAnimationComponent extends GameComponent {
         mSprite = sprite;
     }
    
+    public static final class DirectionConstant {
+    	public static final int INVALID = -1;
+    	public static final int UP = 0;
+    	public static final int LEFT = 1;
+    	public static final int DOWN = 2;
+    	public static final int RIGHT = 3;
+    }
+    
+    public static final int ConvertDirectionOffset(GameObject.Direction dir) {
+    	switch(dir){
+    		case UP:
+    			return DirectionConstant.UP;
+    		case LEFT:
+    			return DirectionConstant.LEFT;
+    		case DOWN:
+    			return DirectionConstant.DOWN;
+    		case RIGHT:
+    			return DirectionConstant.RIGHT;
+    		default:
+    			return 0;
+    	}
+    }
+    
+    public static final int CalculateAnimationIndex(int animation, int dir){
+    	return animation*4 + dir;
+    }
     
     public static final class Animation {
     	public static final int INVALID = -1;

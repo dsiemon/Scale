@@ -148,7 +148,18 @@ public class ObjectManager<T extends BaseObject> extends BaseObject {
         }
         return object;
     }
-    
+    public <S> S findByClassParent(Class<S> classObject) {
+        S object = null;
+        final int count = mObjects.getCount();
+        for (int i = 0; i < count; i++) {
+            BaseObject currentObject = mObjects.get(i);
+            if (classObject.isInstance(currentObject)) {
+                object = classObject.cast(currentObject);
+                break;
+            }
+        }
+        return object;
+    }
     protected FixedSizeArray<T> getPendingObjects() {
         return mPendingAdditions;
     }

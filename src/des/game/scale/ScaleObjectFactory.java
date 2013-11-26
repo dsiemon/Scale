@@ -108,7 +108,7 @@ public abstract class ScaleObjectFactory extends BaseObject{
         return pool;
     }
     
-    protected GameComponent allocateComponent(Class<?> componentType) {
+    public GameComponent allocateComponent(Class<?> componentType) {
         GameComponentPool pool = getComponentPool(componentType);
         assert pool != null;
         GameComponent component = null;
@@ -118,7 +118,7 @@ public abstract class ScaleObjectFactory extends BaseObject{
         return component;
     }
     
-    protected void releaseComponent(GameComponent component) {
+    public void releaseComponent(GameComponent component) {
         GameComponentPool pool = getComponentPool(component.getClass());
         assert pool != null;
         if (pool != null) {
@@ -216,10 +216,10 @@ public abstract class ScaleObjectFactory extends BaseObject{
         //if(object.physcisObject != null){
         //	this.releasePhysicsObject(object.physcisObject);
         //}
-        if(object.attributes != null){
-        	object.attributes.reset();
-    		getComponentPool(GameObjectAttributes.class).release(object.attributes);
-        }
+        //if(object.attributes != null){
+        //	object.attributes.reset();
+    	//	getComponentPool(GameObjectAttributes.class).release(object.attributes);
+        //}
         
         mGameObjectPool.release(object);
     }

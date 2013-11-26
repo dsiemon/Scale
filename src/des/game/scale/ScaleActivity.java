@@ -111,8 +111,10 @@ public abstract class ScaleActivity extends Activity implements SensorEventListe
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int defaultWidth = 800;
-        int defaultHeight = 480;
+        //int defaultWidth = 800;
+        //int defaultHeight = 480;
+        int defaultWidth = 1920;
+        int defaultHeight = 1080;
         if (dm.widthPixels != defaultWidth) {
         	float ratio =((float)dm.widthPixels) / dm.heightPixels;
         	defaultWidth = (int)(defaultHeight * ratio);

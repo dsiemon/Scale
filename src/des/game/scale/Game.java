@@ -78,6 +78,7 @@ public abstract class Game extends AllocationGuard {
     protected abstract void extentionBootstrap();
     protected abstract LevelSystem createLevelSystem();
     protected abstract ScaleObjectFactory createObjectFactory();
+    protected abstract boolean[][] setupCollisionMatrix(); 
     /** 
      * Creates core game objects and constructs the game engine object graph.  Note that the
 \
@@ -148,10 +149,11 @@ public abstract class Game extends AllocationGuard {
             BaseObject.sSystemRegistry.inputGameInterface = inputInterface;
             
 
-            PhysicsEngine.initialize(100, 100, 100, 100);
+            PhysicsEngine.initialize(1000, 1000, 1000, 1000);
             BaseObject.sSystemRegistry.physicsEngine = PhysicsEngine.instance;
             gameRoot.add(PhysicsEngine.instance);
 
+            PhysicsEngine.setCollisionMatrix(this.setupCollisionMatrix());
             GameObjectManager gameManager = new GameObjectManager(params.viewWidth * 2);
             BaseObject.sSystemRegistry.gameObjectManager = gameManager;
             

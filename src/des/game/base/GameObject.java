@@ -52,32 +52,51 @@ public class GameObject extends PhasedObjectManager {
     
     
     public enum ActionType {
-        INVALID,
-        IDLE,
-        MOVE,
-        ATTACK,
-        HIT_REACT,
-        DEATH,
-        FROZEN
+        INVALID(-1),
+        IDLE(0),
+        MOVE(1),
+        ATTACK(2),
+        HIT_REACT(3),
+        DEATH(4),
+        FROZEN(5);
+        
+        private final int mIndex;
+        ActionType(int index) {
+            this.mIndex = index;
+        }
+        
+        public int index() {
+            return mIndex;
+        }
     }
     
     public enum Direction {
         INVALID,
-        NONE,
         LEFT,
         DOWN,
         RIGHT,
         UP,
+        NONE,
         MULTI;
     }
     
+    private int mCurrentDirection;
     private int mCurrentAction;
     private int mCurrentState;
-    
+    public  boolean colCalled;
     public enum Team {
-        NONE,
-        PLAYER,
-        ENEMY
+        NONE(-1),
+        PLAYER(0),
+        ENEMY(1),
+        ENEMY2(2);
+        private final int mIndex;
+        Team(int index) {
+            this.mIndex = index;
+        }
+        
+        public int index() {
+            return mIndex;
+        }
     }
     
     public int team;
@@ -113,6 +132,7 @@ public class GameObject extends PhasedObjectManager {
         velocity.set(1.0f, 1.0f);
         targetVelocity.set(1.0f, 1.0f);
         mCurrentAction = -1;
+        mCurrentDirection = -1;
         mCurrentState = -1;
         destroyOnDeactivation = false;
         haltOnDeactivation = true;
@@ -124,6 +144,7 @@ public class GameObject extends PhasedObjectManager {
         attributes = null;
         
         physcisObject = null;
+        colCalled =false;
 
     }
     
@@ -172,7 +193,15 @@ public class GameObject extends PhasedObjectManager {
         mCurrentAction = type;
     }
     
-    public final int getCurrentState() {
+    public int getCurrentDirection() {
+		return mCurrentDirection;
+	}
+
+	public void setCurrentDirection(int direction) {
+		this.mCurrentDirection = direction;
+	}
+
+	public final int getCurrentState() {
         return mCurrentState;
     }
     

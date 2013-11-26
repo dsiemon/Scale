@@ -25,15 +25,6 @@ public class BoundarySet extends ObjectManager<PhysicsObject>{
 	private BoundarySet(int size){
 		super(size);
 
-		//initialize the collision list
-		collisionMatrix = new boolean[6][];
-		
-		collisionMatrix[PhysicsObject.PASSIVE_TYPE] = new boolean[]  {false,false,false,true ,false,false};
-		collisionMatrix[PhysicsObject.INVISIBLE_WALL] = new boolean[]{false,false,false,true ,false,true};
-		collisionMatrix[PhysicsObject.VISIBLE_WALL] = new boolean[]  {false,false,false,true ,true ,true};
-		collisionMatrix[PhysicsObject.MOB] = new boolean[]           {true ,true ,true ,true,true ,true};
-		collisionMatrix[PhysicsObject.PROJECTILE] = new boolean[]    {false,false,true ,true ,false,true};
-		collisionMatrix[PhysicsObject.MISC] = new boolean[]    {false,true,true ,true ,true,true};
 	}
 	@Override
     public void update(float timeDelta, BaseObject parent) {
@@ -65,34 +56,6 @@ public class BoundarySet extends ObjectManager<PhysicsObject>{
 	}
 
 	/**
-	 * adds a new row into the collision matrix, adding a new possible type for boundaries
-	 * @param newRow collision values for other types, true if a collision with the other type is allowed, defaults to true
-	 * @return
-	 */
-	protected static int addRow(ArrayList<Boolean> newRow){
-//		//if the newRow is too small add true values
-//		if(newRow.size() < collisionMatrix.size() + 1){
-//			while(newRow.size() < collisionMatrix.size() + 1){
-//				newRow.add(true);
-//			}
-//		}
-//		//if the newRow is too large remove values
-//		else if(newRow.size() > collisionMatrix.size() + 1){
-//			while(newRow.size() > collisionMatrix.size() +1){
-//				newRow.remove(newRow.size()-1);
-//			}
-//		}
-//		
-//		//now add a new column to the matrix to maintain the square shape, this vaules come from the new row
-//		for(int i = 0; i < collisionMatrix.size(); i++){
-//			collisionMatrix.get(i).add(newRow.get(i));
-//		}
-//		//now add the new row
-//		collisionMatrix.add(newRow);
-		//return the new type id
-		return 0;//collisionMatrix.size()-1;
-	}
-	/**
 	 * checks the value of the collisionMatrix at i and j
 	 * @param i the first type, i,j = j,i
 	 * @param j the second type
@@ -115,6 +78,6 @@ public class BoundarySet extends ObjectManager<PhysicsObject>{
 			instance = new BoundarySet(size);
 		}
 	}
-	protected static boolean[][] collisionMatrix;
+	public static boolean[][] collisionMatrix;
 	public static BoundarySet instance;
 }

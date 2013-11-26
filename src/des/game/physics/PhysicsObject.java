@@ -22,11 +22,7 @@ import des.game.boundary.Boundary;
 
 public class PhysicsObject extends GameComponent{
 	public static final int PASSIVE_TYPE = 0;
-	public static final int INVISIBLE_WALL = 1;
-	public static final int VISIBLE_WALL = 2;
-	public static final int MOB = 3;
-	public static final int PROJECTILE = 4;
-	public static final int MISC = 5;
+
 	public int type;
 	public VectorObject vector;
 	public Field field;
@@ -42,7 +38,7 @@ public class PhysicsObject extends GameComponent{
 		super();
 		super.setPhase(GameComponent.ComponentPhases.PHYSICS_OBJECT.ordinal());
 		active = true;
-		type = MOB;
+		type = 1;
 		location = new GLPoint();
 		
 	}
@@ -60,7 +56,7 @@ public class PhysicsObject extends GameComponent{
         field = f;
       
 		location = p;
-		type = MOB;
+		type = 1;
 	}
 	
     public void initializeFromTemplate(GameComponent other, float x,float y,float orientation,float velocity,float lifetime){
@@ -150,9 +146,6 @@ public class PhysicsObject extends GameComponent{
 	 * @param t
 	 */
 	public void setType(int t){
-		if(t < 0 || t >= PhysicsEngine.getCollisionMatrixSize()){
-			t = MOB;
-		}
 		type = t;
 	}
 	/**
@@ -188,7 +181,7 @@ public class PhysicsObject extends GameComponent{
 		if(active){
 			this.remove();
 		}
-		type = MOB;
+		type = 1;
 		vector = null;
 		field = null;
 		boundary = null;

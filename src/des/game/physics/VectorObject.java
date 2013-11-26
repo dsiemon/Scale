@@ -26,6 +26,7 @@ public class VectorObject extends GameComponent{
 	protected Velocity velocity;
 	protected boolean locked;
 	protected boolean pendingRemove;
+
 	public VectorObject(){
 		super();
 		super.setPhase(GameComponent.ComponentPhases.PHYSICS_VECTOR.ordinal());
@@ -33,6 +34,7 @@ public class VectorObject extends GameComponent{
 		pendingRemove = false;
 		mass = 1;
 		velocity = new Velocity(0,0,location);
+
 	}
 
 	/**
@@ -240,6 +242,7 @@ public class VectorObject extends GameComponent{
 		velocity.zero();
 		velocity.acceleration.zero();
 		velocity.outsideAcceleration.zero();
+
 		
 	}
 

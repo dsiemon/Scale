@@ -17,12 +17,14 @@
 package des.game.scale;
 
 import des.game.base.BaseObject;
+import des.game.base.DebugLog;
 import des.game.base.GameComponent;
 import des.game.base.GameObject;
 import des.game.base.PhasedObjectManager;
 import des.game.base.Vector2;
 import des.game.drawing.DrawableBufferedBitmap;
 import des.game.drawing.DrawableFactory;
+import des.game.scale.GenericDirectionalAnimationComponent.Animation;
 
 /**
  * Provides an interface for controlling a sprite with animations.  Manages a list of animations
@@ -37,8 +39,11 @@ public class SpriteComponent extends GameComponent {
     private int mWidth;
     private int mHeight;
     private RenderComponent mRenderComponent;
-
     private boolean mVisible;
+    private float r;
+    private float g;
+    private float b;
+    private float a;
     private SpriteAnimation mCurrentAnimation;
     private boolean mAnimationsDirty;
     
@@ -78,6 +83,10 @@ public class SpriteComponent extends GameComponent {
         rotatable = false;
         mCurrentAnimation = null;
         mAnimationsDirty = false;
+		r = 1.0f;
+		g = 1.0f;
+		b = 1.0f;
+		a = 1.0f;
     }
 
     @Override
@@ -100,7 +109,6 @@ public class SpriteComponent extends GameComponent {
                     // We were asked to play an animation that doesn't exist.  Revert to our
                     // default animation. 
                     // TODO: throw an assert here?
-                	
                     mCurrentAnimation = (SpriteAnimation)animations.get(0);
                     currentAnimation = mCurrentAnimation;
                 } else {
@@ -125,9 +133,10 @@ public class SpriteComponent extends GameComponent {
                     	
                         bitmap.setWidth(mWidth);
                         bitmap.setHeight(mHeight);
+                        bitmap.setColor(r, g, b, a);
 
-                        //bitmap.setOpacity(mOpacity);
                         bitmap.setTexture(currentFrame.texture);
+                        
                     	if(this.rotatable){
 
                             // calculate the rotation
@@ -245,5 +254,12 @@ public class SpriteComponent extends GameComponent {
 
     public final int getAnimationCount() {
         return mAnimations.getConcreteCount();
+    }
+    
+    public void setColor(float r, float g, float b, float a){
+    	this.r = r;
+    	this.g = g;
+    	this.b = b;
+    	this.a = a;
     }
 }

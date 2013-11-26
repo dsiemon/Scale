@@ -25,6 +25,8 @@ public class CollisionComponent extends GameComponent implements CollisionBehavi
 	
 	// this compoment wraps this particular physicsObject
 	public PhysicsObject physicsObject;
+	public GameObject parent;
+	
 	public CollisionComponent(){
 		super();
 		super.setPhase(GameComponent.ComponentPhases.POST_PHYSICS.ordinal());
@@ -33,12 +35,13 @@ public class CollisionComponent extends GameComponent implements CollisionBehavi
 		super();
 		super.setPhase(GameComponent.ComponentPhases.POST_PHYSICS.ordinal());
 		
-		this.setPhysicsObject(physicsObject);
+		this.setPhysicsObject(physicsObject, null);
 	}
 	@Override
 	public void reset(){
 		super.reset();
 		this.physicsObject = null;
+		this.parent = null;
 	}
 	
 	@Override
@@ -72,9 +75,9 @@ public class CollisionComponent extends GameComponent implements CollisionBehavi
 		
 	}
 	
-	public void setPhysicsObject(PhysicsObject physicsObject){
+	public void setPhysicsObject(PhysicsObject physicsObject, GameObject parent){
 		this.physicsObject = physicsObject;
-		
+		this.parent = parent;
 		physicsObject.collisionBehavior = this;
 	}
 

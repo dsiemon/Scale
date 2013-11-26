@@ -32,10 +32,13 @@ public abstract class GameComponent extends PhasedObject {
     	PHYSICS_BOUNDARY_PART,
     	PHYSICS_FIELD,
         PHYSICS,                // impulse velocities are summed
-        POST_PHYSICS,           // inertia, friction, and bounce
+        STATUS_EFFECTS,         //
+        CALCULATE_DAMAGE,
+        UPDATE_ATTRIBUTES, 
+        SPELL_EFFECTS,          // custom spell effects
+    	POST_PHYSICS,            // collision components
     	THINK,                  // decisions are made
-    	THINK_TWO,
-    	THINK_THREE,
+    	COLOR,                  // select a color for the object
         ANIMATION,              // animations are selected
         PRE_DRAW,               // drawing state is initialized
         DRAW,                   // drawing commands are scheduled.
