@@ -37,7 +37,7 @@ public class TiledBackgroundVertexGrid extends ScrollableBitmap {
     @Override
     public void draw(float x, float y, float scaleX, float scaleY) {
         if (mGrid != null) {
-            mGrid.draw(x, y, getScrollOriginX(), getScrollOriginY());
+            mGrid.draw(x, y, getScrollOriginX(), getScrollOriginY(), scaleX, scaleY);
         }
     }
         

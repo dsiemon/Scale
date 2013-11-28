@@ -45,6 +45,9 @@ import des.game.scale.RenderSystem.RenderElement;
 public class GameRenderer implements GLSurfaceView.Renderer {
     private static final int PROFILE_REPORT_DELAY = 3 * 1000;
 
+    private int mViewWidth;
+    private int mViewHeight;
+    
     private int mWidth;
     private int mHeight;
     private int mHalfWidth;
@@ -70,15 +73,17 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     
     boolean mCallbackRequested;
         
-    public GameRenderer(Context context, Game game, int gameWidth, int gameHeight) {
+    public GameRenderer(Context context, Game game, int viewWidth, int viewHeight, int gameWidth, int gameHeight) {
         mContext = context;
         mGame = game;
+        mViewWidth = viewWidth;
+        mViewHeight = viewHeight;
         mWidth = gameWidth;
         mHeight = gameHeight;
         mHalfWidth = gameWidth / 2;
         mHalfHeight = gameHeight / 2;
-        mScaleX = 1.0f;
-        mScaleY = 1.0f;
+        mScaleX = viewWidth/gameWidth;
+        mScaleY = viewHeight/gameHeight;
         mDrawQueueChanged = false;
         mDrawLock = new Object();
         mCameraX = 0.0f;
@@ -210,7 +215,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         	mCallbackRequested = false;
         }
         
-        DrawableBitmap.beginDrawing(gl, mWidth, mHeight);
+        DrawableBitmap.beginDrawing(gl, mViewWidth, mViewHeight);
 
         synchronized (this) {
             if (mDrawQueue != null && mDrawQueue.getObjects().getCount() > 0) {

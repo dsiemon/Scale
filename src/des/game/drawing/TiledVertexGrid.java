@@ -71,9 +71,11 @@ public class TiledVertexGrid extends BaseObject {
     public void setColorOff(){
     	this.useColor = false;
     }
-    private Grid generateGrid(int width, int height, int startTileX, int startTileY) {
+    private Grid generateGrid(int width, int height, int startTileX, int startTileY, float scaleX, float scaleY) {
         final int tileWidth = mTileWidth;
         final int tileHeight = mTileHeight;
+        final float tileWidthScale = mTileWidth * scaleX;
+        final float tileHeightScale = mTileHeight * scaleY;
         final int tilesAcross = width / tileWidth;
         final int tilesDown = height / tileHeight;
         final Texture texture = mTexture;
@@ -101,8 +103,8 @@ public class TiledVertexGrid extends BaseObject {
             grid = new Grid(tilesAcross, tilesDown, false);
             for (int tileY = 0; tileY < tilesDown; tileY++) {
                 for (int tileX = 0; tileX < tilesAcross; tileX++) {
-                    final float offsetX = tileX * tileWidth;
-                    final float offsetY = tileY * tileHeight;
+                    final float offsetX = tileX * tileWidthScale;
+                    final float offsetY = tileY * tileHeightScale;
                     // MODIFIED flip column order
                     int tileIndex = mWorld.getTile(startTileX + tileX, 
                             (/*tilesPerWorldColumn - 1 - */(startTileY + tileY)));
@@ -124,9 +126,9 @@ public class TiledVertexGrid extends BaseObject {
                     final float v2 = ((textureOffsetY + tileHeight - GL_MAGIC_OFFSET) * texelHeight);
                     
                     final float[] p0 = { offsetX, offsetY, 0.0f };
-                    final float[] p1 = { offsetX + tileWidth, offsetY, 0.0f };
-                    final float[] p2 = { offsetX, offsetY + tileHeight, 0.0f };
-                    final float[] p3 = { offsetX + tileWidth, offsetY + tileHeight, 0.0f };
+                    final float[] p1 = { offsetX + tileWidthScale, offsetY, 0.0f };
+                    final float[] p2 = { offsetX, offsetY + tileHeightScale, 0.0f };
+                    final float[] p3 = { offsetX + tileWidthScale, offsetY + tileHeightScale, 0.0f };
                     final float[] uv0 = { u, v2 };
                     final float[] uv1 = { u2, v2 };
                     final float[] uv2 = { u, v };
@@ -143,7 +145,7 @@ public class TiledVertexGrid extends BaseObject {
         return grid;
     }
    
-    public void draw(float x, float y, float scrollOriginX, float scrollOriginY) {
+    public void draw(float x, float y, float scrollOriginX, float scrollOriginY, float scaleX, float scaleY) {
         TiledWorld world = mWorld;
         GL10 gl = OpenGLSystem.getGL();
       
@@ -159,8 +161,8 @@ public class TiledVertexGrid extends BaseObject {
             
             BufferLibrary bufferLibrary = sSystemRegistry.bufferLibrary;
             
-            Grid grid = generateGrid((int)mWorldPixelWidth, (int)mWorldPixelHeight, 0, 0);
-            mTileMap = grid;
+            Grid grid = generateGrid((int)mWorldPixelWidth, (int)mWorldPixelHeight, 0, 0, scaleX, scaleY);
+            mTileMap = grid; 
             mGenerated = true;
             if (grid != null) {
                 bufferLibrary.add(grid);
@@ -175,11 +177,11 @@ public class TiledVertexGrid extends BaseObject {
         if (tileMap != null) {
             final Texture texture = mTexture;
             if (gl != null && texture != null) {
-            	
-                int originX = (int) (x - scrollOriginX);
-                int originY = (int) (y - scrollOriginY);
+
+                int originX = (int) ((x - scrollOriginX)*scaleX);
+                int originY = (int) ((y - scrollOriginY)*scaleY);
+
                 
-               
                 final float worldPixelWidth = mWorldPixelWidth;
                 
                 final float percentageScrollRight = 
